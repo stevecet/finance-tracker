@@ -17,7 +17,7 @@ export default function MainLayout({ children }) {
       <div className="flex flex-col min-h-screen bg-blue-50">
         <Header />
         <SideNav />
-        <main>{children}</main>
+        <main className="m-0 sm:ml-16 xl:m-0">{children}</main>
         <Footer/>
       </div>
     </ThemeProvider>

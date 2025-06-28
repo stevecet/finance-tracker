@@ -33,9 +33,9 @@ function Dashboard() {
         <div className="text-sm font-extralight hidden sm:block">Home &gt; <span className="font-bold">Dashboard</span></div>
       </div>
 
-      <Box className="grid sm:grid-cols-2 gap-4">
+      <Box className="grid lg:grid-cols-2 gap-4">
         <Box>
-          <Box className="grid grid-cols-2  gap-8">
+          <Box className="grid grid-cols-2 gap-8">
             {projectSummary.map((project) => (
               <ProjectSummary
                 color={project.color}

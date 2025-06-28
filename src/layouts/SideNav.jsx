@@ -3,24 +3,63 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { IconButton } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const items = [
+  {
+    icon: <DashboardIcon />,
+    link: "/",
+  },
+  {
+    icon: <TaskAltIcon />,
+    link: "/tasks",
+  },
+  {
+    icon: <BarChartIcon />,
+    link: "/statistics",
+  },
+  {
+    icon: <AccountCircleIcon />,
+    link: "/account",
+  },
+];
 
 export default function SideNav() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isActive = (item) => {
+    if (item.link && location.pathname === item.link) return true;
+    if (item.children) return item.children.some((child) => isActive(child));
+    return false;
+  };
+  const handleTextClick = (link) => {
+    if (link) {
+      navigate(link);
+    }
+  };
   return (
-    <div class="fixed shadow-2xl h-fit rounded-full top-46 left-3 bottom-0 flex-col bg-white border-black hidden md:flex">
-      <div class="flex-1 py-4">
-        <nav class="flex relative text-black py-3 mx-2 rounded-full flex-col gap-4">
-          <IconButton className="p-2 rounded-full cursor-pointer">
-            <DashboardIcon />
-          </IconButton>
-          <IconButton className="p-2 rounded-full cursor-pointer">
-            <TaskAltIcon />
-          </IconButton>
-          <IconButton className="p-2 rounded-full cursor-pointer">
-            <BarChartIcon />
-          </IconButton>
-          <IconButton className="p-2 rounded-full cursor-pointer">
-            <AccountCircleIcon />
-          </IconButton>
+    <div className="fixed shadow-2xl h-fit rounded-full top-46 left-3 bottom-0 flex-col bg-white border-black hidden sm:flex">
+      <div className="flex-1 py-4">
+        <nav className="flex relative text-black py-3 mx-2 rounded-full flex-col gap-4">
+          {items.map((item) => {
+            const active = isActive(item);
+            return (
+              <IconButton
+                className="p-2 rounded-full cursor-pointer shadow-md "
+                onClick={() => handleTextClick(item.link)}
+                sx={{
+                  bgcolor: active ? "black" : "transparent",
+                  color: active && "#EFF6FF",
+                  "&:hover": {
+                    bgcolor: "black",
+                    color: active ? "white" : "#EFF6FF",
+                  },
+                }}
+              >
+                {item.icon}
+              </IconButton>
+            );
+          })}
         </nav>
       </div>
     </div>
