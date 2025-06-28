@@ -28,10 +28,14 @@ const projectSummary = [
 function Dashboard() {
   return (
     <Container maxWidth="lg" className="mt-4">
+      <div className="flex justify-between items-center pb-7">
+        <div className="text-2xl font-bold">Dashboard</div>
+        <div className="text-sm font-extralight hidden sm:block">Home &gt; <span className="font-bold">Dashboard</span></div>
+      </div>
+
       <Box className="grid sm:grid-cols-2 gap-4">
         <Box>
-          <div className="font-bold">Project Summary</div>
-          <Box className="grid grid-cols-2  gap-4">
+          <Box className="grid grid-cols-2  gap-8">
             {projectSummary.map((project) => (
               <ProjectSummary
                 color={project.color}
@@ -43,7 +47,6 @@ function Dashboard() {
         </Box>
 
         <Box>
-          <div>Project Statistics</div>
           <ProjectStatistics />
         </Box>
       </Box>

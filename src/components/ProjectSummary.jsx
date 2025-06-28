@@ -5,7 +5,7 @@ export default function ProjectSummary({ color, count, label }) {
   return (
     <Box
       sx={{ backgroundColor: color }}
-      className="shadow-md rounded-2xl p-4 h-48 mb-4"
+      className="shadow-md rounded-2xl p-4 h-44 mb-4"
     >
       <div className="flex justify-between">
         <div className="text-3xl font-bold">{count}</div>
