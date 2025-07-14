@@ -58,8 +58,8 @@ export default function Footer() {
     }
   };
   return (
-    <Container maxWidth="lg">
-      <div className="m-0 sm:ml-16 my-4 lg:my-0 xl:m-0 flex justify-between items-center sm:flex-row flex-col gap-1">
+    <Container maxWidth="lg" >
+      <div className="m-0 sm:ml-16 my-4 lg:my-0 xl:m-0 flex justify-between items-center sm:flex-row flex-col-reverse gap-2">
         <div className="rounded-full px-5 py-2 bg-white shadow-md text-gray-400 font-light text-sm">
           © Copyright{" "}
           <a href="https://github.com/stevecet/" className="text-blue-400">
@@ -68,8 +68,8 @@ export default function Footer() {
           </a>{" "}
           | all rights reserved
         </div>
-        <div className="rounded-full px-5 py-0 bg-white shadow-md text-gray-400 font-light ">
-          <IconButton>
+        <div className="rounded-full px-5 pb-0.5 bg-white shadow-md text-gray-400 font-light ">
+          <IconButton size="small">
             <a
               href="https://wa.me/237659461748"
               target="blank"
@@ -77,7 +77,7 @@ export default function Footer() {
             <WhatsAppIcon className="hover:text-green-500" />
           </a>
           </IconButton>
-          <IconButton>
+          <IconButton size="small">
             <a
               href="https://www.linkedin.com/in/gilchrist-steve-aurel-veceto-6a4216202/"
               target="blank"
@@ -85,7 +85,7 @@ export default function Footer() {
               <LinkedInIcon className="hover:text-blue-700" />
             </a>
           </IconButton>
-          <IconButton>
+          <IconButton size="small">
             <a
               type="IconButton"
               className="cursor-pointer"

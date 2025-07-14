@@ -2,23 +2,27 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const items = [
   {
+    title: "Dashboard",
     icon: <DashboardIcon />,
     link: "/",
   },
   {
+    title: "Tasks",
     icon: <TaskAltIcon />,
     link: "/tasks",
   },
   {
+    title: "Statistics",
     icon: <BarChartIcon />,
     link: "/statistics",
   },
   {
+    title: "Account",
     icon: <AccountCircleIcon />,
     link: "/account",
   },
@@ -44,20 +48,22 @@ export default function SideNav() {
           {items.map((item) => {
             const active = isActive(item);
             return (
-              <IconButton
-                className="p-2 rounded-full cursor-pointer shadow-md "
-                onClick={() => handleTextClick(item.link)}
-                sx={{
-                  bgcolor: active ? "black" : "transparent",
-                  color: active && "#EFF6FF",
-                  "&:hover": {
-                    bgcolor: "black",
-                    color: active ? "white" : "#EFF6FF",
-                  },
-                }}
-              >
-                {item.icon}
-              </IconButton>
+              <Tooltip title={item.title} placement="right">
+                <IconButton
+                  className="p-2 rounded-full cursor-pointer shadow-md"
+                  onClick={() => handleTextClick(item.link)}
+                  sx={{
+                    bgcolor: active ? "black" : "transparent",
+                    color: active && "#EFF6FF",
+                    "&:hover": {
+                      bgcolor: "black",
+                      color: active ? "white" : "#EFF6FF",
+                    },
+                  }}
+                >
+                  {item.icon}
+                </IconButton>
+              </Tooltip>
             );
           })}
         </nav>
