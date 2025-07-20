@@ -18,7 +18,7 @@ export default function Header() {
             <SearchIcon className="ml-2 text-blue-400" />
             <input
               type="text"
-              placeholder="Search here..."
+              placeholder="Search task..."
               className="ml-2 text-black text-sm bg-transparent outline-none w-full"
             />
           </div>

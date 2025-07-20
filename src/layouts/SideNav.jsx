@@ -9,7 +9,7 @@ const items = [
   {
     title: "Dashboard",
     icon: <DashboardIcon />,
-    link: "/",
+    link: "/project-dashboard",
   },
   {
     title: "Tasks",
@@ -53,10 +53,10 @@ export default function SideNav() {
                   className="p-2 rounded-full cursor-pointer shadow-md"
                   onClick={() => handleTextClick(item.link)}
                   sx={{
-                    bgcolor: active ? "black" : "transparent",
-                    color: active && "#EFF6FF",
+                    bgcolor: active ? "#3C74D9" : "transparent",
+                    color: active ? "#EFF6FF" : "black",
                     "&:hover": {
-                      bgcolor: "black",
+                      bgcolor: "#65CCCD",
                       color: active ? "white" : "#EFF6FF",
                     },
                   }}

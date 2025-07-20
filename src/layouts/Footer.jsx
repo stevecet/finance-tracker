@@ -59,7 +59,7 @@ export default function Footer() {
   };
   return (
     <Container maxWidth="lg" >
-      <div className="m-0 sm:ml-16 my-4 lg:my-0 xl:m-0 flex justify-between items-center sm:flex-row flex-col-reverse gap-2">
+      <div className="mx-0 sm:ml-16 my-4 xl:mx-0 flex justify-between items-center sm:flex-row flex-col-reverse gap-2">
         <div className="rounded-full px-5 py-2 bg-white shadow-md text-gray-400 font-light text-sm">
           © Copyright{" "}
           <a href="https://github.com/stevecet/" className="text-blue-400">
