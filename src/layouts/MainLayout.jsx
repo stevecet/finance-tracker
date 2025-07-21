@@ -62,7 +62,7 @@ export default function MainLayout({ children }) {
         <SideNav darkMode={darkMode} />
 
         <Container maxWidth="lg" className="mt-4">
-          <main className="m-0 sm:ml-16 xl:m-0">{children}</main>
+          <main className="m-0 sm:ml-16 xl:m-0" darkMode={darkMode}>{children}</main>
         </Container>
         <Footer darkMode={darkMode} />
       </div>

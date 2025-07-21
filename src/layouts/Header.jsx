@@ -3,10 +3,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Container, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "../components/SearchContext";
+import { useState } from "react";
+import NotificationDialog from "../components/Notifications";
 
-export default function Header({ darkMode, setDarkMode}) {
+export default function Header({ darkMode, setDarkMode }) {
   const navigate = useNavigate();
   const { setSearchTerm } = useSearch();
+   const [openNotifications, setOpenNotifications] = useState(false);
 
   return (
     <Container maxWidth="xl">
@@ -32,9 +35,17 @@ export default function Header({ darkMode, setDarkMode}) {
             >
               {darkMode ? <Sunny /> : <Nightlight />}
             </IconButton>
-            <IconButton className="p-2 shadow-sm rounded-full cursor-pointer">
+            <IconButton
+              onClick={() => setOpenNotifications(true)}
+              className="text-gray-600 dark:text-gray-200 p-2 shadow-sm rounded-full cursor-pointer"
+            >
               <Notifications />
             </IconButton>
+
+            <NotificationDialog
+              open={openNotifications}
+              onClose={() => setOpenNotifications(false)}
+            />
           </div>
         </div>
       </div>

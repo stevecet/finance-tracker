@@ -17,7 +17,7 @@ import { tasks } from "../data/tasks";
 import TaskFilters from "../components/tasks/TaskFilters";
 import { buttons } from "../data/buttons";
 import CreateTask from "../components/tasks/CreateTask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../components/SearchContext";
 
 export default function TaskList() {
@@ -27,6 +27,7 @@ export default function TaskList() {
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state?.filter) {
@@ -165,7 +166,7 @@ export default function TaskList() {
               </div>
 
               {/* Task Title */}
-              <Typography variant="h6" fontWeight="bold" color="text.primary">
+              <Typography variant="h6" fontWeight="bold" color="text.primary" onClick={()=> navigate("/taskdetail")} className="cursor-pointer">
                 {task.title}
               </Typography>
 
