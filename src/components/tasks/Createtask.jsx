@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Button,
   Avatar,
-  Chip,
   Typography,
   IconButton,
   Dialog,
@@ -19,7 +18,6 @@ import {
   Description,
   People,
   Close,
-  AccessTime,
 } from "@mui/icons-material";
 
 export default function CreateTask({
