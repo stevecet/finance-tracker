@@ -12,12 +12,19 @@ import {
   CssBaseline,
   Container,
   responsiveFontSizes,
-  Box
+  Box,
 } from "@mui/material";
-import { Add, ArrowForward, Nightlight, Notifications, Sunny } from "@mui/icons-material";
+import {
+  Add,
+  ArrowForward,
+  Nightlight,
+  Notifications,
+  Sunny,
+} from "@mui/icons-material";
+import SearchIcon from "@mui/icons-material/Search";
 import TimeManagement from "../components/TimeManagement";
 import { useNavigate } from "react-router-dom";
-
+import CreateProject from "../components/CreateProject";
 
 const projects = [
   {
@@ -25,6 +32,8 @@ const projects = [
     name: "Taskify",
     description: "Steveceto team",
     background: "linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)",
+    startDate: "",
+    endDate: "",
     members: [
       { id: 1, avatar: "/placeholder.svg?height=32&width=32", name: "User 1" },
       { id: 2, avatar: "/placeholder.svg?height=32&width=32", name: "User 2" },
@@ -37,6 +46,8 @@ const projects = [
     name: "Online",
     description: "Course apps",
     background: "linear-gradient(135deg, #a855f7 0%, #9333ea 100%)",
+    startDate: "",
+    endDate: "",
     members: [
       { id: 1, avatar: "/placeholder.svg?height=32&width=32", name: "User 1" },
       { id: 2, avatar: "/placeholder.svg?height=32&width=32", name: "User 2" },
@@ -70,7 +81,13 @@ const timeEntries = [
 export default function Dashboard() {
   const [showTime, setShowTime] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
+  const filteredProject = projects.filter((project) =>
+    project.name.toLowerCase().includes(query.toLowerCase())
+  );
 
   const appTheme = useMemo(() => {
     return responsiveFontSizes(
@@ -112,7 +129,9 @@ export default function Dashboard() {
                 color: darkMode ? "#e2e8f0" : "#334155",
                 "&:hover": {
                   borderColor: darkMode ? "#64748b" : "#94a3b8",
-                  backgroundColor: darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.02)",
+                  backgroundColor: darkMode
+                    ? "rgba(255,255,255,0.05)"
+                    : "rgba(0,0,0,0.02)",
                 },
               },
             },
@@ -133,59 +152,76 @@ export default function Dashboard() {
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <Container maxWidth="xl">
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            ml: { xs: 0, md: 10 },
-            px: 4,
-            py: 8,
-            color: 'text.primary'
-          }}
-        >
+        <div className=" flex justify-between items-center ml-10 sm:ml-0 px-4 py-8 text-gray-800">
           <div className="cursor-pointer">
-            <img className="w-40" src="/logo.png" alt="App Logo" />
+            <img
+              className="w-40"
+              src="/logo.png"
+              onClick={() => navigate("/")}
+            />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex justify-around m items-center  gap-2">
+            <div className="hidden sm:flex items-center shadow-sm rounded-full p-2 bg-gray-100 dark:bg-gray-700 w-64 transition-colors duration-300">
+              <SearchIcon className="ml-2 text-blue-400" />
+              <input
+                type="text"
+                placeholder="Search project..."
+                className="ml-2 text-black dark:text-white text-sm bg-transparent outline-none w-full placeholder:text-gray-500 dark:placeholder:text-gray-300"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
             <div className="flex gap-3">
               <IconButton
                 onClick={() => setDarkMode(!darkMode)}
-                sx={{ 
-                  bgcolor: 'background.paper', 
+                sx={{
+                  bgcolor: "background.paper",
                   boxShadow: 1,
-                  '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
+                  "&:hover": {
+                    bgcolor: darkMode
+                      ? "rgba(255,255,255,0.1)"
+                      : "rgba(0,0,0,0.05)",
+                  },
                 }}
               >
                 {darkMode ? <Sunny /> : <Nightlight />}
               </IconButton>
-              <IconButton 
-                sx={{ 
-                  bgcolor: 'background.paper', 
+              <IconButton
+                sx={{
+                  bgcolor: "background.paper",
                   boxShadow: 1,
-                  '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
+                  "&:hover": {
+                    bgcolor: darkMode
+                      ? "rgba(255,255,255,0.1)"
+                      : "rgba(0,0,0,0.05)",
+                  },
                 }}
               >
                 <Notifications />
               </IconButton>
             </div>
           </div>
-        </Box>
+        </div>
       </Container>
-      <Box sx={{ 
-        minHeight: '100vh', 
-        p: 3,
-        bgcolor: 'background.default',
-        color: 'text.primary'
-      }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          p: 3,
+          bgcolor: "background.default",
+          color: "text.primary",
+        }}
+      >
         <div className="max-w-6xl mx-auto">
           {/* Projects Section */}
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <Typography variant="h5" fontWeight="bold">Dashboard</Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  Dashboard
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  You have {projects.length} projects
+                  You have {filteredProject.length}{" "}
+                  {filteredProject.length > 1 ? "projects" : "project"}
                 </Typography>
               </div>
               <Button
@@ -196,6 +232,7 @@ export default function Dashboard() {
                   px: 3,
                   py: 1,
                 }}
+                onClick={() => setCreateDialogOpen(true)}
               >
                 Add
               </Button>
@@ -203,7 +240,7 @@ export default function Dashboard() {
 
             {/* Project Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {projects.map((project) => (
+              {filteredProject.map((project) => (
                 <Card
                   key={project.id}
                   sx={{
@@ -263,7 +300,7 @@ export default function Dashboard() {
                       fullWidth
                       variant="contained"
                       endIcon={<ArrowForward />}
-                      onClick={()=> navigate("/project-dashboard")}
+                      onClick={() => navigate("/project-dashboard")}
                       sx={{
                         backgroundColor: "rgba(0,0,0,0.2)",
                         color: "white",
@@ -294,6 +331,10 @@ export default function Dashboard() {
           />
         </div>
       </Box>
+      <CreateProject
+        createDialogOpen={createDialogOpen}
+        setCreateDialogOpen={setCreateDialogOpen}
+      />
     </ThemeProvider>
   );
 }

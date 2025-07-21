@@ -10,9 +10,7 @@ import {
   Box,
   Typography,
   IconButton,
-  Select,
-  MenuItem,
-  FormControl,
+  useTheme
 } from "@mui/material";
 import { Add, CalendarToday, People, Comment } from "@mui/icons-material";
 import { tasks } from "../data/tasks";
@@ -22,6 +20,8 @@ import Createtask from "../components/tasks/Createtask";
 
 export default function TaskList() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === "dark";
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const getFilteredTasks = () => {
@@ -63,14 +63,30 @@ export default function TaskList() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div
+      className="min-h-screen"
+    >
       {/* Header */}
       <div className="px-4 pb-6">
         <div className="flex justify-between items-center pb-7">
-          <div className="text-2xl font-bold">My Tasks</div>
+          <Typography variant="h5" fontWeight="bold" color="text.primary">
+            My Tasks
+          </Typography>
           <IconButton
-            className="text-white hover:bg-white/20"
             onClick={() => setCreateDialogOpen(true)}
+            sx={{
+              color: darkMode
+                ? theme.palette.primary.main
+                : theme.palette.primary.contrastText,
+              backgroundColor: darkMode
+                ? alpha(theme.palette.primary.main, 0.1)
+                : theme.palette.primary.main,
+              "&:hover": {
+                backgroundColor: darkMode
+                  ? alpha(theme.palette.primary.main, 0.2)
+                  : theme.palette.primary.dark,
+              },
+            }}
           >
             <Add />
           </IconButton>
@@ -80,6 +96,7 @@ export default function TaskList() {
           counts={counts}
           activeFilter={activeFilter}
           onChange={setActiveFilter}
+          darkMode={darkMode}
         />
       </div>
 
@@ -88,12 +105,17 @@ export default function TaskList() {
         {filteredTasks.map((task) => (
           <Card
             key={task.id}
-            className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300"
             sx={{
-              backgroundColor: "rgba(255,255,255,0.8)",
+              backgroundColor: darkMode
+                ? alpha(theme.palette.background.paper, 0.2)
+                : "rgba(255,255,255,0.8)",
               backdropFilter: "blur(8px)",
               borderRadius: 3,
               border: "none",
+              boxShadow: theme.shadows[3],
+              "&:hover": {
+                boxShadow: theme.shadows[6],
+              },
             }}
           >
             <CardContent className="p-4">
@@ -107,21 +129,28 @@ export default function TaskList() {
                     fontSize: 12,
                     backgroundColor: alpha(
                       getPriorityColorHex(task.priority),
-                      0.1
+                      darkMode ? 0.15 : 0.1
                     ),
                     color: getPriorityColorHex(task.priority),
                     border: "none",
                     borderRadius: 4,
                   }}
                 />
-                <div className="flex items-center gap-1 text-xs text-gray-500">
-                  <CalendarToday sx={{ fontSize: 12 }} />
-                  <Typography variant="caption">{task.date}</Typography>
+                <div className="flex items-center gap-1 text-xs">
+                  <CalendarToday
+                    sx={{
+                      fontSize: 12,
+                      color: theme.palette.text.secondary,
+                    }}
+                  />
+                  <Typography variant="caption" color="text.secondary">
+                    {task.date}
+                  </Typography>
                 </div>
               </div>
 
               {/* Task Title */}
-              <Typography variant="h6" className="font-semibold text-gray-900">
+              <Typography variant="h6" fontWeight="bold" color="text.primary">
                 {task.title}
               </Typography>
 
@@ -131,24 +160,26 @@ export default function TaskList() {
                   variant="determinate"
                   color="primary"
                   value={(task.progress / task.total) * 100}
-                  className="h-2 rounded-full"
                   sx={{
                     height: 8,
                     borderRadius: 4,
-                    backgroundColor: "#65CCCD",
+                    backgroundColor: darkMode
+                      ? alpha(theme.palette.primary.light, 0.2)
+                      : "#65CCCD",
                     "& .MuiLinearProgress-bar": {
                       borderRadius: 4,
-                      backgroundColor: "#3C74D9",
+                      backgroundColor: theme.palette.primary.main,
                     },
                   }}
                 />
                 <div className="flex justify-between items-center my-3">
-                  <Typography variant="body2" className="text-gray-600">
+                  <Typography variant="body2" color="text.secondary">
                     Progress
                   </Typography>
                   <Typography
                     variant="body2"
-                    className="font-medium text-gray-900"
+                    fontWeight="medium"
+                    color="text.primary"
                   >
                     {task.progress}/{task.total}
                   </Typography>
@@ -174,7 +205,12 @@ export default function TaskList() {
                         key={index}
                         alt={`User ${index + 1}`}
                         sx={{
-                          bgcolor: "violet",
+                          bgcolor: darkMode
+                            ? theme.palette.secondary.dark
+                            : theme.palette.secondary.light,
+                          color: darkMode
+                            ? theme.palette.secondary.contrastText
+                            : theme.palette.secondary.dark,
                           width: 32,
                           height: 32,
                         }}
@@ -183,36 +219,52 @@ export default function TaskList() {
                       </Avatar>
                     ))}
                   </AvatarGroup>
-                  <People className="text-gray-400" sx={{ fontSize: 16 }} />
+                  <People
+                    sx={{
+                      fontSize: 16,
+                      color: theme.palette.text.secondary,
+                    }}
+                  />
                 </div>
 
                 {/* Comments Count */}
                 <div className="flex items-center gap-1">
-                  <Comment className="text-gray-400" sx={{ fontSize: 16 }} />
-                  <Typography variant="body1" className="text-gray-500">
+                  <Comment
+                    sx={{
+                      fontSize: 16,
+                      color: theme.palette.text.secondary,
+                    }}
+                  />
+                  <Typography variant="body1" color="text.secondary">
                     {task.comments}
                   </Typography>
                 </div>
               </div>
+
               {/* Category Tag */}
-              <div className="mt-3 pt-3 border-t border-gray-100">
+              <div
+                className="mt-3 pt-3 border-t"
+                style={{ borderColor: theme.palette.divider }}
+              >
                 <Chip
                   label={task.category}
                   variant="filled"
                   size="small"
-                  className="bg-pink-50 text-blue-700"
                   sx={{
-                    backgroundColor: "#E8EEF7",
-                    color: "#3C74D9",
+                    backgroundColor: darkMode
+                      ? alpha(theme.palette.primary.main, 0.15)
+                      : alpha(theme.palette.primary.light, 0.3),
+                    color: theme.palette.primary.main,
                     fontSize: "0.75rem",
                     "&:hover": {
-                      backgroundColor: "#fce7f3",
+                      backgroundColor: darkMode
+                        ? alpha(theme.palette.primary.main, 0.25)
+                        : alpha(theme.palette.primary.light, 0.4),
                     },
                   }}
                 />
               </div>
             </CardContent>
-            
           </Card>
         ))}
       </div>
@@ -220,15 +272,20 @@ export default function TaskList() {
       {/* Empty State */}
       {filteredTasks.length === 0 && (
         <Box className="text-center py-12">
-          <Typography variant="body1" className="text-gray-400 mb-2">
+          <Typography variant="body1" color="text.secondary" mb={1}>
             No tasks found
           </Typography>
-          <Typography variant="body2" className="text-gray-500">
+          <Typography variant="body2" color="text.secondary">
             Try adjusting your filters
           </Typography>
         </Box>
       )}
-      <Createtask createDialogOpen={createDialogOpen} setCreateDialogOpen={setCreateDialogOpen}/>
+
+      <Createtask
+        createDialogOpen={createDialogOpen}
+        setCreateDialogOpen={setCreateDialogOpen}
+        darkMode={darkMode}
+      />
     </div>
   );
 }

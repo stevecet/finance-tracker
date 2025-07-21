@@ -46,7 +46,7 @@ export default function TaskFilters({
   );
 
   return (
-    <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 overflow-x-auto sm:overflow-x-visible pb-2 text-black">
+    <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 overflow-x-auto sm:overflow-x-visible pb-2 text-black dark:text-white">
       {buttons.map(({ id, label }) => (
         <button
           key={id}
@@ -56,8 +56,8 @@ export default function TaskFilters({
         text-xs sm:text-sm whitespace-nowrap
         ${
           activeFilter === id
-            ? "bg-black text-blue-50"
-            : "border border-black text-black bg-transparent"
+            ? "bg-black text-blue-50 dark:bg-blue-50 dark:text-black"
+            : "border border-black text-black bg-transparent dark:border-blue-50 dark:text-blue-50"
         }
       `}
         >

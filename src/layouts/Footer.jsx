@@ -58,24 +58,23 @@ export default function Footer() {
     }
   };
   return (
-    <Container maxWidth="lg" >
-      <div className="mx-0 sm:ml-16 my-4 xl:mx-0 flex justify-between items-center sm:flex-row flex-col-reverse gap-2">
-        <div className="rounded-full px-5 py-2 bg-white shadow-md text-gray-400 font-light text-sm">
+    <Container maxWidth="lg">
+      <div className=" sm:ml-16 my-4 xl:mx-0 flex justify-between items-center sm:flex-row flex-col-reverse gap-2">
+        <div className="rounded-full px-5 py-2 bg-white dark:bg-gray-800 shadow-md text-gray-400 dark:text-gray-300 font-light text-sm">
           © Copyright{" "}
-          <a href="https://github.com/stevecet/" className="text-blue-400">
-            {" "}
-            steveceto{" "}
+          <a
+            href="https://github.com/stevecet/"
+            className="text-blue-400 hover:underline"
+          >
+            steveceto
           </a>{" "}
           | all rights reserved
         </div>
-        <div className="rounded-full px-5 pb-0.5 bg-white shadow-md text-gray-400 font-light ">
+        <div className="rounded-full px-5 pb-0.5 bg-white dark:bg-gray-800 shadow-md text-gray-400 dark:text-gray-300 font-light">
           <IconButton size="small">
-            <a
-              href="https://wa.me/237659461748"
-              target="blank"
-            >
-            <WhatsAppIcon className="hover:text-green-500" />
-          </a>
+            <a href="https://wa.me/237659461748" target="blank">
+              <WhatsAppIcon className="hover:text-green-500" />
+            </a>
           </IconButton>
           <IconButton size="small">
             <a
@@ -86,17 +85,13 @@ export default function Footer() {
             </a>
           </IconButton>
           <IconButton size="small">
-            <a
-              type="IconButton"
-              className="cursor-pointer"
-              href="https://github.com/stevecet/"
-              target="blank"
-            >
-            <GitHubIcon className="hover:text-black" />
+            <a href="https://github.com/stevecet/" target="blank">
+              <GitHubIcon className="hover:text-white" />
             </a>
           </IconButton>
         </div>
       </div>
+
       <div className="flex justify-between items-center sm:hidden">
         <IconButton
           onClick={() => setMobileOpen(true)}
@@ -115,7 +110,6 @@ export default function Footer() {
             "& .MuiDrawer-paper": {
               width: DRAWER_WIDTH,
               boxSizing: "border-box",
-              borderRight: "1px solid #d7dae0",
             },
           }}
         >
@@ -133,18 +127,16 @@ export default function Footer() {
               const active = isActive(item);
               return (
                 <div
-                  className="flex items-center p-2 cursor-pointer hover:bg-gray-400"
-                  style={{
-                    bgcolor: active ? "black" : "transparent",
-                  }}
+                  key={item.title}
+                  className={`flex items-center p-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 ${
+                    active ? "bg-gray-300 dark:bg-gray-800" : ""
+                  }`}
+                  onClick={() => handleTextClick(item.link)}
                 >
-                  <IconButton
-                    className="rounded-full "
-                    onClick={() => handleTextClick(item.link)}
-                  >
+                  <IconButton className="rounded-full text-black dark:text-white">
                     {item.icon}
                   </IconButton>
-                  <div className="text-black">{item.title}</div>
+                  <div className="text-black dark:text-white">{item.title}</div>
                 </div>
               );
             })}

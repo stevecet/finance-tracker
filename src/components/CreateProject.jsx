@@ -12,6 +12,7 @@ import {
   Select,
   MenuItem,
   FormControl,
+  useTheme,
 } from "@mui/material";
 import {
   Add,
@@ -22,7 +23,13 @@ import {
   AccessTime,
 } from "@mui/icons-material";
 
-export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
+export default function CreateProject({
+  createDialogOpen,
+  setCreateDialogOpen,
+  darkMode,
+}) {
+  const theme = useTheme();
+
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -83,15 +90,26 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
       fullScreen
       PaperProps={{
         sx: {
-          backgroundColor: "#EFF6FF"
+          backgroundColor: darkMode
+            ? theme.palette.background.default
+            : "#EFF6FF",
+          color: theme.palette.text.primary,
         },
       }}
     >
       {/* Dialog Header */}
-      <DialogTitle className="bg-white">
+      <DialogTitle
+        sx={{
+          backgroundColor: darkMode ? theme.palette.background.paper : "white",
+          borderBottom: darkMode ? "1px solid #334155" : "1px solid #e5e7eb",
+        }}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <IconButton onClick={() => setCreateDialogOpen(false)}>
+            <IconButton
+              onClick={() => setCreateDialogOpen(false)}
+              sx={{ color: theme.palette.text.primary }}
+            >
               <Close />
             </IconButton>
             <Typography variant="h6" className="font-semibold">
@@ -106,14 +124,23 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                 displayEmpty
                 startAdornment={
                   <People
-                    className="mr-2 text-gray-500"
-                    sx={{ fontSize: 16 }}
+                    className="mr-2"
+                    sx={{
+                      fontSize: 16,
+                      color: theme.palette.text.secondary,
+                    }}
                   />
                 }
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: darkMode
+                    ? theme.palette.background.paper
+                    : "white",
+                  color: theme.palette.text.primary,
                   "& .MuiOutlinedInput-notchedOutline": {
                     border: "none",
+                  },
+                  "& .MuiSvgIcon-root": {
+                    color: theme.palette.text.primary,
                   },
                 }}
               >
@@ -126,11 +153,21 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
         </div>
       </DialogTitle>
 
-      <DialogContent className="px-6 my-4 space-y-6">
-
+      <DialogContent
+        className="px-6 my-4 space-y-6"
+        sx={{
+          backgroundColor: darkMode
+            ? theme.palette.background.default
+            : "#EFF6FF",
+        }}
+      >
         {/* Task Title */}
         <div>
-          <Typography variant="subtitle1" className="font-medium mb-2">
+          <Typography
+            variant="subtitle1"
+            className="font-medium mb-2"
+            color="textSecondary"
+          >
             Task title
           </Typography>
           <TextField
@@ -143,16 +180,27 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
             InputProps={{
               startAdornment: (
                 <Article
-                  className="mr-3 text-gray-400"
-                  sx={{ fontSize: 20 }}
+                  className="mr-3"
+                  sx={{
+                    fontSize: 20,
+                    color: theme.palette.text.secondary,
+                  }}
                 />
               ),
+              sx: {
+                color: theme.palette.text.primary,
+              },
             }}
             sx={{
-              backgroundColor: "white",
+              backgroundColor: darkMode
+                ? theme.palette.background.paper
+                : "white",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#e5e7eb",
+                  borderColor: darkMode ? theme.palette.divider : "#e5e7eb",
+                },
+                "&:hover fieldset": {
+                  borderColor: theme.palette.primary.main,
                 },
               },
             }}
@@ -161,7 +209,11 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
 
         {/* Description */}
         <div>
-          <Typography variant="subtitle1" className="font-medium mb-2">
+          <Typography
+            variant="subtitle1"
+            className="font-medium mb-2"
+            color="textSecondary"
+          >
             Description
           </Typography>
           <TextField
@@ -176,16 +228,27 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
             InputProps={{
               startAdornment: (
                 <Description
-                  className="mr-3 text-gray-400 self-start mt-1"
-                  sx={{ fontSize: 20 }}
+                  className="mr-3 self-start mt-1"
+                  sx={{
+                    fontSize: 20,
+                    color: theme.palette.text.secondary,
+                  }}
                 />
               ),
+              sx: {
+                color: theme.palette.text.primary,
+              },
             }}
             sx={{
-              backgroundColor: "white",
+              backgroundColor: darkMode
+                ? theme.palette.background.paper
+                : "white",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#e5e7eb",
+                  borderColor: darkMode ? theme.palette.divider : "#e5e7eb",
+                },
+                "&:hover fieldset": {
+                  borderColor: theme.palette.primary.main,
                 },
               },
             }}
@@ -195,7 +258,11 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
         {/* Time Section */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Typography variant="subtitle1" className="font-medium mb-2">
+            <Typography
+              variant="subtitle1"
+              className="font-medium mb-2"
+              color="textSecondary"
+            >
               Start date
             </Typography>
             <TextField
@@ -205,18 +272,32 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
               onChange={(e) =>
                 setNewTask((prev) => ({ ...prev, startTime: e.target.value }))
               }
+              InputProps={{
+                sx: {
+                  color: theme.palette.text.primary,
+                },
+              }}
               sx={{
-                backgroundColor: "white",
+                backgroundColor: darkMode
+                  ? theme.palette.background.paper
+                  : "white",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "#e5e7eb",
+                    borderColor: darkMode ? theme.palette.divider : "#e5e7eb",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
                   },
                 },
               }}
             />
           </div>
           <div>
-            <Typography variant="subtitle1" className="font-medium mb-2">
+            <Typography
+              variant="subtitle1"
+              className="font-medium mb-2"
+              color="textSecondary"
+            >
               End date
             </Typography>
             <TextField
@@ -226,11 +307,21 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
               onChange={(e) =>
                 setNewTask((prev) => ({ ...prev, endTime: e.target.value }))
               }
+              InputProps={{
+                sx: {
+                  color: theme.palette.text.primary,
+                },
+              }}
               sx={{
-                backgroundColor: "white",
+                backgroundColor: darkMode
+                  ? theme.palette.background.paper
+                  : "white",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "#e5e7eb",
+                    borderColor: darkMode ? theme.palette.divider : "#e5e7eb",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
                   },
                 },
               }}
@@ -240,7 +331,11 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
 
         {/* Priority */}
         <div>
-          <Typography variant="subtitle1" className="font-medium mb-3">
+          <Typography
+            variant="subtitle1"
+            className="font-medium mb-3"
+            color="textSecondary"
+          >
             Priority
           </Typography>
           <div className="flex gap-3">
@@ -251,19 +346,34 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                   newTask.priority === priority ? "contained" : "outlined"
                 }
                 onClick={() => setNewTask((prev) => ({ ...prev, priority }))}
-                className={`rounded-full px-6 py-2 ${
-                  newTask.priority === priority
-                    ? "bg-gray-900 text-white hover:bg-gray-800"
-                    : "border-gray-300 text-gray-700 hover:bg-gray-50"
-                }`}
                 sx={{
+                  borderRadius: "24px",
+                  px: 3,
+                  py: 1,
                   backgroundColor:
-                    newTask.priority === priority ? "#1f2937" : "white",
-                  color: newTask.priority === priority ? "white" : "#374151",
-                  borderColor: "#d1d5db",
+                    newTask.priority === priority
+                      ? darkMode
+                        ? theme.palette.primary.main
+                        : "#1f2937"
+                      : "transparent",
+                  color:
+                    newTask.priority === priority
+                      ? "white"
+                      : theme.palette.text.primary,
+                  borderColor: darkMode ? theme.palette.divider : "#d1d5db",
                   "&:hover": {
                     backgroundColor:
-                      newTask.priority === priority ? "#111827" : "#f9fafb",
+                      newTask.priority === priority
+                        ? darkMode
+                          ? theme.palette.primary.dark
+                          : "#111827"
+                        : darkMode
+                        ? theme.palette.action.hover
+                        : "#f9fafb",
+                    borderColor:
+                      newTask.priority === priority
+                        ? "transparent"
+                        : theme.palette.divider,
                   },
                 }}
               >
@@ -275,23 +385,31 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
 
         {/* Participants */}
         <div>
-          <Typography variant="subtitle1" className="font-medium">
+          <Typography
+            variant="subtitle1"
+            className="font-medium"
+            color="textSecondary"
+          >
             Participants
           </Typography>
           <div className="flex items-center gap-3 flex-wrap">
             <IconButton
               onClick={handleAddParticipant}
-              className="border-2 border-dashed border-gray-300 hover:border-gray-400"
               sx={{
                 width: 40,
                 height: 40,
-                border: "2px dashed #d1d5db",
+                border: "2px dashed",
+                borderColor: darkMode ? theme.palette.divider : "#d1d5db",
+                color: theme.palette.text.secondary,
                 "&:hover": {
-                  borderColor: "#9ca3af",
+                  borderColor: theme.palette.primary.main,
+                  backgroundColor: darkMode
+                    ? theme.palette.action.hover
+                    : "rgba(0,0,0,0.04)",
                 },
               }}
             >
-              <Add className="text-gray-500" />
+              <Add />
             </IconButton>
             {newTask.participants.map((participant) => (
               <div key={participant.id} className="relative py-5">
@@ -307,12 +425,12 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                     width: 20,
                     height: 20,
                     position: "absolute",
-                    top: 10,
-                    right: -5,
-                    backgroundColor: "#6b7280",
+                    top: -10,
+                    right: -10,
+                    backgroundColor: darkMode ? "#4b5563" : "#6b7280",
                     color: "white",
                     "&:hover": {
-                      backgroundColor:"#4b5563",
+                      backgroundColor: darkMode ? "#374151" : "#4b5563",
                     },
                   }}
                 >
@@ -323,6 +441,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                   sx={{
                     display: "block",
                     textAlign: "center",
+                    color: theme.palette.text.secondary,
                   }}
                 >
                   {participant.name}
@@ -334,21 +453,29 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
       </DialogContent>
 
       {/* Create Button */}
-      <div className="p-6">
+      <div
+        className="p-6"
+        sx={{
+          backgroundColor: darkMode
+            ? theme.palette.background.default
+            : "#EFF6FF",
+        }}
+      >
         <Button
           fullWidth
           variant="contained"
           onClick={handleCreateTask}
-          className="bg-gray-900 hover:bg-gray-800 text-white py-4 rounded-xl text-lg font-medium"
           sx={{
-            backgroundColor: "#1f2937",
+            backgroundColor: darkMode ? theme.palette.primary.main : "#1f2937",
             color: "white",
             padding: "16px",
             borderRadius: "12px",
             fontSize: "1.125rem",
             fontWeight: 500,
             "&:hover": {
-              backgroundColor: "#111827",
+              backgroundColor: darkMode
+                ? theme.palette.primary.dark
+                : "#111827",
             },
           }}
         >
