@@ -12,13 +12,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
-import {
-  Add,
-  Article,
-  Description,
-  People,
-  Close,
-} from "@mui/icons-material";
+import { Add, Article, Description, People, Close } from "@mui/icons-material";
 
 export default function CreateTask({
   createDialogOpen,
@@ -117,7 +111,10 @@ export default function CreateTask({
         </div>
       </DialogTitle>
 
-      <DialogContent className="px-6 py-4 space-y-6 bg-white dark:bg-gray-700" sx={{paddingX: 10}}>
+      <DialogContent
+        className="px-6 py-4 space-y-6 bg-white dark:bg-gray-700"
+        sx={{ paddingX: 10 }}
+      >
         {/* Task Title */}
         <div>
           <Typography variant="subtitle1" className="font-medium mb-2">
