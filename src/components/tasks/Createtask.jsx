@@ -22,7 +22,11 @@ import {
   AccessTime,
 } from "@mui/icons-material";
 
-export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
+export default function CreateTask({
+  createDialogOpen,
+  setCreateDialogOpen,
+  darkMode,
+}) {
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -81,20 +85,15 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
       open={createDialogOpen}
       onClose={() => setCreateDialogOpen(false)}
       fullScreen
-      PaperProps={{
-        sx: {
-          backgroundColor: "#EFF6FF"
-        },
-      }}
     >
       {/* Dialog Header */}
-      <DialogTitle className="bg-white">
-        <div className="flex items-center justify-between">
+      <DialogTitle className="dark:bg-gray-700 py-6">
+        <div className="flex items-center justify-between py-3">
           <div className="flex items-center">
             <IconButton onClick={() => setCreateDialogOpen(false)}>
               <Close />
             </IconButton>
-            <Typography variant="h6" className="font-semibold">
+            <Typography variant="h6" fontWeight="bold" color="text.primary">
               Create Task
             </Typography>
           </div>
@@ -106,16 +105,10 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                 displayEmpty
                 startAdornment={
                   <People
-                    className="mr-2 text-gray-500"
+                    className="mr-2 text-gray-700 dark:text-gray-50"
                     sx={{ fontSize: 16 }}
                   />
                 }
-                sx={{
-                  backgroundColor: "white",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none",
-                  },
-                }}
               >
                 <MenuItem value="private">Private to you</MenuItem>
                 <MenuItem value="team">Team</MenuItem>
@@ -126,8 +119,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
         </div>
       </DialogTitle>
 
-      <DialogContent className="px-6 my-4 space-y-6">
-
+      <DialogContent className="px-6 py-4 space-y-6 bg-white dark:bg-gray-700" sx={{paddingX: 10}}>
         {/* Task Title */}
         <div>
           <Typography variant="subtitle1" className="font-medium mb-2">
@@ -142,14 +134,11 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
             }
             InputProps={{
               startAdornment: (
-                <Article
-                  className="mr-3 text-gray-400"
-                  sx={{ fontSize: 20 }}
-                />
+                <Article className="mr-3 text-gray-400" sx={{ fontSize: 20 }} />
               ),
             }}
             sx={{
-              backgroundColor: "white",
+              backgroundColor: darkMode ? "#374151" : "white",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "#e5e7eb",
@@ -182,7 +171,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
               ),
             }}
             sx={{
-              backgroundColor: "white",
+              backgroundColor: darkMode ? "#374151" : "white",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "#e5e7eb",
@@ -206,7 +195,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                 setNewTask((prev) => ({ ...prev, startTime: e.target.value }))
               }
               sx={{
-                backgroundColor: "white",
+                backgroundColor: darkMode ? "#374151" : "white",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#e5e7eb",
@@ -227,7 +216,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                 setNewTask((prev) => ({ ...prev, endTime: e.target.value }))
               }
               sx={{
-                backgroundColor: "white",
+                backgroundColor: darkMode ? "#374151" : "white",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#e5e7eb",
@@ -312,7 +301,7 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
                     backgroundColor: "#6b7280",
                     color: "white",
                     "&:hover": {
-                      backgroundColor:"#4b5563",
+                      backgroundColor: "#4b5563",
                     },
                   }}
                 >
@@ -331,30 +320,29 @@ export default function Createtask({ createDialogOpen, setCreateDialogOpen }) {
             ))}
           </div>
         </div>
+        {/* Create Button */}
+        <div className="p-6">
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleCreateTask}
+            className="bg-gray-900 hover:bg-gray-800 text-white py-4 rounded-xl text-lg font-medium"
+            sx={{
+              backgroundColor: "#1f2937",
+              color: "white",
+              padding: "16px",
+              borderRadius: "12px",
+              fontSize: "1.125rem",
+              fontWeight: 500,
+              "&:hover": {
+                backgroundColor: "#111827",
+              },
+            }}
+          >
+            + Create Task
+          </Button>
+        </div>
       </DialogContent>
-
-      {/* Create Button */}
-      <div className="p-6">
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={handleCreateTask}
-          className="bg-gray-900 hover:bg-gray-800 text-white py-4 rounded-xl text-lg font-medium"
-          sx={{
-            backgroundColor: "#1f2937",
-            color: "white",
-            padding: "16px",
-            borderRadius: "12px",
-            fontSize: "1.125rem",
-            fontWeight: 500,
-            "&:hover": {
-              backgroundColor: "#111827",
-            },
-          }}
-        >
-          + Create Task
-        </Button>
-      </div>
     </Dialog>
   );
 }

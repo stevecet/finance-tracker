@@ -1,43 +1,31 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
+  Typography,
+  Container,
+  Grid,
   Card,
   CardContent,
   Chip,
-  Container,
-  Typography,
 } from "@mui/material";
+import {
+  Assignment,
+  CheckCircle,
+  Schedule,
+  PendingActions,
+} from "@mui/icons-material";
 import ProjectSummary from "../components/ProjectSummary";
-import ProjectStatistics from "../components/ProjectStatistics";
+import TaskPieChart from "../components/TaskPieChart";
 
-const projectSummary = [
-  {
-    color: "#9E9BFF",
-    count: 24,
-    label: "In Progress",
-  },
-  {
-    color: "#F2BB54",
-    count: 56,
-    label: "In Review",
-  },
-  {
-    color: "#ECA7FE",
-    count: 16,
-    label: "On Hold",
-  },
-  {
-    color: "#68D669",
-    count: 45,
-    label: "Completed",
-  },
-];
+const taskData = {
+  total: 156,
+  completed: 89,
+  inProgress: 34,
+  todo: 33,
+};
 
-function ProjectDashboard() {
+export default function ProfessionalDashboard() {
   return (
-    <Container maxWidth="lg" className="mt-4">
+    <Container maxWidth="xl" className="py-8">
+      {/* Header */}
       <div className="flex justify-between items-center pb-7">
         <div className="text-2xl font-bold">Project dashboard</div>
         <Chip
@@ -51,25 +39,147 @@ function ProjectDashboard() {
         />
       </div>
 
-      <Box className="grid lg:grid-cols-2 gap-4">
-        <Box>
-          <Box className="grid grid-cols-2 gap-8">
-            {projectSummary.map((project) => (
+      <Grid container spacing={4}>
+        {/* Summary Cards */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <ProjectSummary
-                color={project.color}
-                count={project.count}
-                label={project.label}
+                color="#8b5cf6"
+                count={taskData.total}
+                label="Total Tasks"
+                filter="all"
+                icon={<Assignment className="text-white" />}
+                percentage={100}
               />
-            ))}
-          </Box>
-        </Box>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ProjectSummary
+                color="#10b981"
+                count={taskData.completed}
+                label="Completed"
+                filter="complete"
+                icon={<CheckCircle className="text-white" />}
+                percentage={(
+                  (taskData.completed / taskData.total) *
+                  100
+                ).toFixed(0)}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ProjectSummary
+                color="#3b82f6"
+                count={taskData.inProgress}
+                label="In Progress"
+                filter="inprogress"
+                icon={<Schedule className="text-white" />}
+                percentage={(
+                  (taskData.inProgress / taskData.total) *
+                  100
+                ).toFixed(0)}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ProjectSummary
+                color="#f59e0b"
+                count={taskData.todo}
+                filter="todo"
+                label="To Do"
+                icon={<PendingActions className="text-white" />}
+                percentage={((taskData.todo / taskData.total) * 100).toFixed(0)}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-        <Box>
-          <ProjectStatistics />
-        </Box>
-      </Box>
+        {/* Pie Chart */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <TaskPieChart data={taskData} />
+        </Grid>
+      </Grid>
+      {/* Quick Stats */}
+      <Card
+        className="mt-6 shadow-lg"
+        sx={{
+          borderRadius: "16px",
+          backgroundColor: (theme) =>
+            theme.palette.mode === "dark"
+              ? "#1f2937"
+              : "rgba(255,255,255,0.95)", // dark: gray-800
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        <CardContent className="p-6 text-gray-900 dark:text-white">
+          <Typography
+            variant="h6"
+            className="font-bold text-gray-900 dark:text-white mb-4"
+          >
+            Performance Metrics
+          </Typography>
+
+          <div className="space-y-4 my-4">
+            <div className="flex justify-between items-center">
+              <Typography
+                variant="body2"
+                className="text-gray-600 dark:text-gray-300"
+              >
+                Completion Rate
+              </Typography>
+              <Typography
+                variant="body2"
+                className="font-bold text-green-600 dark:text-green-400"
+              >
+                {((taskData.completed / taskData.total) * 100).toFixed(1)}%
+              </Typography>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <Typography
+                variant="body2"
+                className="text-gray-600 dark:text-gray-300"
+              >
+                Active Tasks
+              </Typography>
+              <Typography
+                variant="body2"
+                className="font-bold text-blue-600 dark:text-blue-400"
+              >
+                {taskData.inProgress + taskData.todo}
+              </Typography>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <Typography
+                variant="body2"
+                className="text-gray-600 dark:text-gray-300"
+              >
+                Team Productivity
+              </Typography>
+              <Typography
+                variant="body2"
+                className="font-bold text-purple-600 dark:text-purple-400"
+              >
+                High
+              </Typography>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <Typography
+                variant="body2"
+                className="text-gray-600 dark:text-gray-300"
+              >
+                Average Time
+              </Typography>
+              <Typography
+                variant="body2"
+                className="font-bold text-orange-600 dark:text-orange-400"
+              >
+                2.3 days
+              </Typography>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </Container>
   );
 }
-
-export default ProjectDashboard;

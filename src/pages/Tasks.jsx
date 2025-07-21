@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   alpha,
   Card,
@@ -10,19 +10,28 @@ import {
   Box,
   Typography,
   IconButton,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { Add, CalendarToday, People, Comment } from "@mui/icons-material";
 import { tasks } from "../data/tasks";
 import TaskFilters from "../components/tasks/TaskFilters";
 import { buttons } from "../data/buttons";
-import Createtask from "../components/tasks/Createtask";
+import CreateTask from "../components/tasks/CreateTask";
+import { useLocation } from "react-router-dom";
 
 export default function TaskList() {
+  const location = useLocation();
+
   const [activeFilter, setActiveFilter] = useState("all");
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.filter) {
+      setActiveFilter(location.state.filter);
+    }
+  }, [location.state]);
 
   const getFilteredTasks = () => {
     switch (activeFilter) {
@@ -63,9 +72,7 @@ export default function TaskList() {
   };
 
   return (
-    <div
-      className="min-h-screen"
-    >
+    <div className="min-h-screen">
       {/* Header */}
       <div className="px-4 pb-6">
         <div className="flex justify-between items-center pb-7">
@@ -281,7 +288,7 @@ export default function TaskList() {
         </Box>
       )}
 
-      <Createtask
+      <CreateTask
         createDialogOpen={createDialogOpen}
         setCreateDialogOpen={setCreateDialogOpen}
         darkMode={darkMode}
