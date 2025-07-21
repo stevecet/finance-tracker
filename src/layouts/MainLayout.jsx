@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import SideNav from "./SideNav";
 import { useState, useMemo, useEffect } from "react";
+import SearchResultBanner from "../components/SearchResultBanner";
 
 export default function MainLayout({ children }) {
   const [darkMode, setDarkMode] = useState(false);
@@ -57,6 +58,7 @@ export default function MainLayout({ children }) {
         }
       >
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <SearchResultBanner />
         <SideNav darkMode={darkMode} />
 
         <Container maxWidth="lg" className="mt-4">

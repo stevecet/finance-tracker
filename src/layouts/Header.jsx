@@ -2,9 +2,11 @@ import { Nightlight, Notifications, Sunny } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Container, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSearch } from "../components/SearchContext";
 
-export default function Header({ darkMode, setDarkMode }) {
+export default function Header({ darkMode, setDarkMode}) {
   const navigate = useNavigate();
+  const { setSearchTerm } = useSearch();
 
   return (
     <Container maxWidth="xl">
@@ -19,6 +21,7 @@ export default function Header({ darkMode, setDarkMode }) {
               type="text"
               placeholder="Search task..."
               className="ml-2 text-black dark:text-white text-sm bg-transparent outline-none w-full placeholder:text-gray-500 dark:placeholder:text-gray-300"
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 

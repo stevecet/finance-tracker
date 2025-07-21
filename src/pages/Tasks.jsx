@@ -18,10 +18,11 @@ import TaskFilters from "../components/tasks/TaskFilters";
 import { buttons } from "../data/buttons";
 import CreateTask from "../components/tasks/CreateTask";
 import { useLocation } from "react-router-dom";
+import { useSearch } from "../components/SearchContext";
 
 export default function TaskList() {
   const location = useLocation();
-
+  const { searchTerm } = useSearch();
   const [activeFilter, setActiveFilter] = useState("all");
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
@@ -57,6 +58,13 @@ export default function TaskList() {
 
   const counts = getTaskCounts();
   const filteredTasks = getFilteredTasks();
+  const filteredTask = filteredTasks.filter((task) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      task.title.toLowerCase().includes(term) ||
+      task.status.toLowerCase().includes(term)
+    );
+  });
 
   const getPriorityColorHex = (priority) => {
     switch (priority) {
@@ -109,7 +117,7 @@ export default function TaskList() {
 
       {/* Task Cards */}
       <div className="rounded-lg px-4 py-3 space-y-3">
-        {filteredTasks.map((task) => (
+        {filteredTask.map((task) => (
           <Card
             key={task.id}
             sx={{
