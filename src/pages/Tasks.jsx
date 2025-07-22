@@ -121,10 +121,8 @@ export default function TaskList() {
         {filteredTask.map((task) => (
           <Card
             key={task.id}
+            className="dark:bg-gray-800 bg-transparent"
             sx={{
-              backgroundColor: darkMode
-                ? alpha(theme.palette.background.paper, 0.2)
-                : "rgba(255,255,255,0.8)",
               backdropFilter: "blur(8px)",
               borderRadius: 3,
               border: "none",

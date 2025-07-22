@@ -99,13 +99,9 @@ export default function ProfessionalDashboard() {
       </Grid>
       {/* Quick Stats */}
       <Card
-        className="mt-6 shadow-lg"
+        className="mt-6 shadow-lg dark:bg-gray-800 bg-transparent"
         sx={{
           borderRadius: "16px",
-          backgroundColor: (theme) =>
-            theme.palette.mode === "dark"
-              ? "#1f2937"
-              : "rgba(255,255,255,0.95)", // dark: gray-800
           backdropFilter: "blur(10px)",
         }}
       >

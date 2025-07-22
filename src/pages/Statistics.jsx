@@ -1,5 +1,5 @@
-import React from "react"
-import { useState } from "react"
+import React from "react";
+import { useState } from "react";
 import {
   Container,
   Card,
@@ -13,12 +13,9 @@ import {
   InputLabel,
   Chip,
   LinearProgress,
-  IconButton,
-  Switch,
-  FormControlLabel,
   Box,
   useTheme,
-} from "@mui/material"
+} from "@mui/material";
 import {
   TrendingUp,
   TrendingDown,
@@ -27,12 +24,7 @@ import {
   CheckCircle,
   PendingActions,
   CalendarToday,
-  FilterList,
-  Download,
-  Refresh,
-  DarkMode,
-  LightMode,
-} from "@mui/icons-material"
+} from "@mui/icons-material";
 import {
   LineChart,
   Line,
@@ -49,7 +41,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts"
+} from "recharts";
 
 // Sample project data
 const projectData = {
@@ -65,12 +57,32 @@ const projectData = {
   inProgressTasks: 34,
   todoTasks: 33,
   teamMembers: [
-    { id: 1, name: "Sarah Johnson", avatar: "/placeholder.svg?height=32&width=32", role: "Designer" },
-    { id: 2, name: "Mike Chen", avatar: "/placeholder.svg?height=32&width=32", role: "Developer" },
-    { id: 3, name: "Emma Davis", avatar: "/placeholder.svg?height=32&width=32", role: "PM" },
-    { id: 4, name: "John Smith", avatar: "/placeholder.svg?height=32&width=32", role: "Developer" },
+    {
+      id: 1,
+      name: "Sarah Johnson",
+      avatar: "/placeholder.svg?height=32&width=32",
+      role: "Designer",
+    },
+    {
+      id: 2,
+      name: "Mike Chen",
+      avatar: "/placeholder.svg?height=32&width=32",
+      role: "Developer",
+    },
+    {
+      id: 3,
+      name: "Emma Davis",
+      avatar: "/placeholder.svg?height=32&width=32",
+      role: "PM",
+    },
+    {
+      id: 4,
+      name: "John Smith",
+      avatar: "/placeholder.svg?height=32&width=32",
+      role: "Developer",
+    },
   ],
-}
+};
 
 // Chart data
 const progressData = [
@@ -81,7 +93,7 @@ const progressData = [
   { date: "Mar 15", completed: 62, inProgress: 28, todo: 66 },
   { date: "Apr 1", completed: 75, inProgress: 32, todo: 49 },
   { date: "Apr 15", completed: 89, inProgress: 34, todo: 33 },
-]
+];
 
 const velocityData = [
   { week: "Week 1", tasksCompleted: 8, planned: 10 },
@@ -91,21 +103,21 @@ const velocityData = [
   { week: "Week 5", tasksCompleted: 18, planned: 15 },
   { week: "Week 6", tasksCompleted: 14, planned: 16 },
   { week: "Week 7", tasksCompleted: 12, planned: 11 },
-]
+];
 
 const taskDistribution = [
   { name: "Design", value: 45, color: "#8b5cf6" },
   { name: "Development", value: 78, color: "#3b82f6" },
   { name: "Testing", value: 23, color: "#10b981" },
   { name: "Documentation", value: 10, color: "#f59e0b" },
-]
+];
 
 const teamPerformance = [
   { name: "Sarah Johnson", completed: 28, inProgress: 5, efficiency: 92 },
   { name: "Mike Chen", completed: 32, inProgress: 8, efficiency: 88 },
   { name: "Emma Davis", completed: 15, inProgress: 12, efficiency: 85 },
   { name: "John Smith", completed: 14, inProgress: 9, efficiency: 78 },
-]
+];
 
 const burndownData = [
   { day: "Day 1", ideal: 156, actual: 156 },
@@ -115,70 +127,78 @@ const burndownData = [
   { day: "Day 60", ideal: 92, actual: 89 },
   { day: "Day 75", ideal: 76, actual: 81 },
   { day: "Day 90", ideal: 60, actual: 67 },
-]
+];
 
-const COLORS = ["#8b5cf6", "#3b82f6", "#10b981", "#f59e0b"]
+const COLORS = ["#8b5cf6", "#3b82f6", "#10b981", "#f59e0b"];
 
-export default function ProjectStatistics({darkMode, toggleDarkMode}) {
+export default function ProjectStatistics({ darkMode }) {
   const theme = useTheme();
-  const [timeRange, setTimeRange] = useState("last30days")
+  const [timeRange, setTimeRange] = useState("last30days");
 
   const StatCard = ({ title, value, change, icon, color, subtitle }) => {
     const colorMap = {
       purple: theme.palette.secondary.main,
       green: theme.palette.success.main,
       blue: theme.palette.primary.main,
-      orange: theme.palette.warning.main
+      orange: theme.palette.warning.main,
     };
-    
-    const bgColor = darkMode 
-      ? theme.palette.background.paper 
-      : theme.palette.background.default;
-    
+
     return (
       <Card
         sx={{
           borderRadius: "16px",
-          backgroundColor: bgColor,
           boxShadow: theme.shadows[2],
           color: theme.palette.text.primary,
         }}
+        className="dark:bg-gray-800 bg-transparent"
       >
         <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-            <Box 
-              sx={{ 
-                p: 1.5, 
-                borderRadius: '12px',
-                backgroundColor: darkMode 
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 2,
+            }}
+          >
+            <Box
+              sx={{
+                p: 1.5,
+                borderRadius: "12px",
+                backgroundColor: darkMode
                   ? alpha(colorMap[color], 0.15)
                   : alpha(colorMap[color], 0.1),
               }}
             >
-              {React.cloneElement(icon, { 
-                sx: { 
+              {React.cloneElement(icon, {
+                sx: {
                   fontSize: 24,
-                  color: colorMap[color]
-                } 
+                  color: colorMap[color],
+                },
               })}
             </Box>
-            <Box sx={{ textAlign: 'right' }}>
+            <Box sx={{ textAlign: "right" }}>
               <Typography variant="h4" fontWeight="bold" color="text.primary">
                 {value}
               </Typography>
               {change && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                   {change > 0 ? (
-                    <TrendingUp sx={{ fontSize: 16, color: theme.palette.success.main }} />
+                    <TrendingUp
+                      sx={{ fontSize: 16, color: theme.palette.success.main }}
+                    />
                   ) : (
-                    <TrendingDown sx={{ fontSize: 16, color: theme.palette.error.main }} />
+                    <TrendingDown
+                      sx={{ fontSize: 16, color: theme.palette.error.main }}
+                    />
                   )}
-                  <Typography 
-                    variant="caption" 
-                    sx={{ 
-                      color: change > 0 
-                        ? theme.palette.success.main 
-                        : theme.palette.error.main 
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color:
+                        change > 0
+                          ? theme.palette.success.main
+                          : theme.palette.error.main,
                     }}
                   >
                     {Math.abs(change)}%
@@ -187,7 +207,11 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
               )}
             </Box>
           </Box>
-          <Typography variant="body2" fontWeight="medium" color="text.secondary">
+          <Typography
+            variant="body2"
+            fontWeight="medium"
+            color="text.secondary"
+          >
             {title}
           </Typography>
           {subtitle && (
@@ -197,59 +221,66 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
           )}
         </CardContent>
       </Card>
-    )
-  }
+    );
+  };
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <Box 
-          sx={{ 
-            p: 2, 
-            borderRadius: '12px', 
+        <Box
+          sx={{
+            p: 2,
+            borderRadius: "12px",
             boxShadow: theme.shadows[3],
             backgroundColor: theme.palette.background.paper,
             border: `1px solid ${theme.palette.divider}`,
-            color: theme.palette.text.primary
+            color: theme.palette.text.primary,
           }}
         >
-          <Typography variant="body2" fontWeight="bold">{label}</Typography>
+          <Typography variant="body2" fontWeight="bold">
+            {label}
+          </Typography>
           {payload.map((entry, index) => (
-            <Typography 
-              key={index} 
-              variant="body2" 
-              sx={{ color: entry.color }}
-            >
+            <Typography key={index} variant="body2" sx={{ color: entry.color }}>
               {entry.name}: {entry.value}
             </Typography>
           ))}
         </Box>
-      )
+      );
     }
-    return null
-  }
+    return null;
+  };
 
   // Chart color adjustments for dark mode
   const chartGridColor = theme.palette.divider;
   const chartTextColor = theme.palette.text.secondary;
 
   return (
-    <Box 
-      sx={{ 
-        minHeight: '100vh', 
-        py: 4
+    <Box
+      sx={{
+        minHeight: "100vh",
+        py: 4,
       }}
     >
       <Container maxWidth="xl" sx={{ py: 4 }}>
         {/* Header */}
-        <Box sx={{ 
-          display: 'flex', 
-          flexDirection: { xs: 'column', md: 'row' },
-          justifyContent: 'space-between', 
-          alignItems: { xs: 'flex-start', md: 'center' },
-          mb: 4 
-        }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: { xs: 2, md: 0 } }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            alignItems: { xs: "flex-start", md: "center" },
+            mb: 4,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              mb: { xs: 2, md: 0 },
+            }}
+          >
             <Box>
               <Typography variant="h4" fontWeight="bold" color="text.primary">
                 {projectData.name} - Statistics
@@ -260,31 +291,20 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
             </Box>
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={darkMode}
-                  onChange={toggleDarkMode}
-                  color="primary"
-                />
-              }
-              label={darkMode ? 
-                <LightMode sx={{ color: theme.palette.warning.light }} /> : 
-                <DarkMode sx={{ color: theme.palette.text.secondary }} />
-              }
-            />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel sx={{ color: theme.palette.text.secondary }}>Time Range</InputLabel>
+              <InputLabel sx={{ color: theme.palette.text.secondary }}>
+                Time Range
+              </InputLabel>
               <Select
                 value={timeRange}
                 label="Time Range"
                 onChange={(e) => setTimeRange(e.target.value)}
-                sx={{ 
+                sx={{
                   borderRadius: "12px",
-                  backgroundColor: theme.palette.background.paper,
                   color: theme.palette.text.primary,
                 }}
+                className="dark:bg-gray-800 bg-transparent"
               >
                 <MenuItem value="last7days">Last 7 days</MenuItem>
                 <MenuItem value="last30days">Last 30 days</MenuItem>
@@ -292,33 +312,6 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                 <MenuItem value="all">All time</MenuItem>
               </Select>
             </FormControl>
-            <IconButton sx={{ 
-              backgroundColor: theme.palette.background.paper, 
-              boxShadow: theme.shadows[1],
-              "&:hover": {
-                backgroundColor: theme.palette.action.hover
-              }
-            }}>
-              <FilterList />
-            </IconButton>
-            <IconButton sx={{ 
-              backgroundColor: theme.palette.background.paper, 
-              boxShadow: theme.shadows[1],
-              "&:hover": {
-                backgroundColor: theme.palette.action.hover
-              }
-            }}>
-              <Download />
-            </IconButton>
-            <IconButton sx={{ 
-              backgroundColor: theme.palette.background.paper, 
-              boxShadow: theme.shadows[1],
-              "&:hover": {
-                backgroundColor: theme.palette.action.hover
-              }
-            }}>
-              <Refresh />
-            </IconButton>
           </Box>
         </Box>
 
@@ -326,37 +319,48 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
         <Card
           sx={{
             borderRadius: "16px",
-            backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[2],
-            mb: 4
+            mb: 4,
           }}
+          className="dark:bg-gray-800 bg-transparent"
         >
           <CardContent sx={{ p: 3 }}>
-            <Box sx={{ 
-              display: 'grid', 
-              gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, 
-              gap: 3 
-            }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+                gap: 3,
+              }}
+            >
               <Box>
-                <Typography variant="h6" fontWeight="bold" color="text.primary" mb={1}>
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  color="text.primary"
+                  mb={1}
+                >
                   Project Overview
                 </Typography>
                 <Typography variant="body2" color="text.secondary" mb={2}>
                   {projectData.description}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                  <CalendarToday sx={{ fontSize: 16, color: theme.palette.text.secondary }} />
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}
+                >
+                  <CalendarToday
+                    sx={{ fontSize: 16, color: theme.palette.text.secondary }}
+                  />
                   <Typography variant="body2" color="text.secondary">
                     {projectData.startDate} - {projectData.endDate}
                   </Typography>
                 </Box>
                 <Chip
                   label={projectData.status}
-                  sx={{ 
-                    backgroundColor: darkMode 
-                      ? alpha(theme.palette.info.main, 0.15) 
+                  sx={{
+                    backgroundColor: darkMode
+                      ? alpha(theme.palette.info.main, 0.15)
                       : alpha(theme.palette.info.light, 0.3),
-                    color: theme.palette.info.main
+                    color: theme.palette.info.main,
                   }}
                 />
               </Box>
@@ -365,7 +369,12 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                 <Typography variant="body2" color="text.secondary" mb={1}>
                   Overall Progress
                 </Typography>
-                <Typography variant="h4" fontWeight="bold" color="text.primary" mb={1}>
+                <Typography
+                  variant="h4"
+                  fontWeight="bold"
+                  color="text.primary"
+                  mb={1}
+                >
                   {projectData.progress}%
                 </Typography>
                 <LinearProgress
@@ -383,7 +392,8 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                   }}
                 />
                 <Typography variant="caption" color="text.disabled">
-                  {projectData.completedTasks} of {projectData.totalTasks} tasks completed
+                  {projectData.completedTasks} of {projectData.totalTasks} tasks
+                  completed
                 </Typography>
               </Box>
 
@@ -393,15 +403,15 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                 </Typography>
                 <AvatarGroup max={4} sx={{ mb: 1 }}>
                   {projectData.teamMembers.map((member) => (
-                    <Avatar 
-                      key={member.id} 
-                      src={member.avatar} 
-                      alt={member.name} 
-                      sx={{ 
-                        width: 40, 
+                    <Avatar
+                      key={member.id}
+                      src={member.avatar}
+                      alt={member.name}
+                      sx={{
+                        width: 40,
                         height: 40,
-                        backgroundColor: theme.palette.grey[700]
-                      }} 
+                        backgroundColor: theme.palette.grey[700],
+                      }}
                     />
                   ))}
                 </AvatarGroup>
@@ -414,12 +424,18 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
         </Card>
 
         {/* Key Metrics */}
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, 
-          gap: 3, 
-          mb: 4 
-        }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
+            gap: 3,
+            mb: 4,
+          }}
+        >
           <StatCard
             title="Total Tasks"
             value={projectData.totalTasks}
@@ -434,7 +450,10 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
             change={12}
             icon={<CheckCircle />}
             color="green"
-            subtitle={`${((projectData.completedTasks / projectData.totalTasks) * 100).toFixed(1)}% completion rate`}
+            subtitle={`${(
+              (projectData.completedTasks / projectData.totalTasks) *
+              100
+            ).toFixed(1)}% completion rate`}
           />
           <StatCard
             title="In Progress"
@@ -454,28 +473,38 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
           />
         </Box>
 
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, 1fr)' }, 
-          gap: 4, 
-          mb: 4 
-        }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", lg: "repeat(2, 1fr)" },
+            gap: 4,
+            mb: 4,
+          }}
+        >
           {/* Progress Over Time */}
           <Card
+            className="dark:bg-gray-800 bg-transparent"
             sx={{
               borderRadius: "16px",
-              backgroundColor: theme.palette.background.paper,
               boxShadow: theme.shadows[2],
             }}
           >
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="text.primary"
+                mb={2}
+              >
                 Progress Over Time
               </Typography>
               <Box sx={{ height: 320 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={progressData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke={chartGridColor}
+                    />
                     <XAxis dataKey="date" stroke={chartTextColor} />
                     <YAxis stroke={chartTextColor} />
                     <Tooltip content={<CustomTooltip />} />
@@ -496,13 +525,13 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                       fill={alpha(theme.palette.info.main, 0.3)}
                       name="In Progress"
                     />
-                    <Area 
-                      type="monotone" 
-                      dataKey="todo" 
-                      stackId="1" 
-                      stroke={theme.palette.warning.main} 
-                      fill={alpha(theme.palette.warning.main, 0.3)} 
-                      name="To Do" 
+                    <Area
+                      type="monotone"
+                      dataKey="todo"
+                      stackId="1"
+                      stroke={theme.palette.warning.main}
+                      fill={alpha(theme.palette.warning.main, 0.3)}
+                      name="To Do"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -512,14 +541,19 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
 
           {/* Task Distribution */}
           <Card
+            className="dark:bg-gray-800 bg-transparent"
             sx={{
               borderRadius: "16px",
-              backgroundColor: theme.palette.background.paper,
               boxShadow: theme.shadows[2],
             }}
           >
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="text.primary"
+                mb={2}
+              >
                 Task Distribution by Category
               </Typography>
               <Box sx={{ height: 320 }}>
@@ -547,41 +581,51 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
           </Card>
         </Box>
 
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, 1fr)' }, 
-          gap: 4, 
-          mb: 4 
-        }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", lg: "repeat(2, 1fr)" },
+            gap: 4,
+            mb: 4,
+          }}
+        >
           {/* Team Velocity */}
           <Card
             sx={{
               borderRadius: "16px",
-              backgroundColor: theme.palette.background.paper,
               boxShadow: theme.shadows[2],
             }}
+            className="dark:bg-gray-800 bg-transparent"
           >
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="text.primary"
+                mb={2}
+              >
                 Team Velocity
               </Typography>
               <Box sx={{ height: 320 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={velocityData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke={chartGridColor}
+                    />
                     <XAxis dataKey="week" stroke={chartTextColor} />
                     <YAxis stroke={chartTextColor} />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend wrapperStyle={{ color: chartTextColor }} />
-                    <Bar 
-                      dataKey="planned" 
-                      fill={theme.palette.grey[500]} 
-                      name="Planned" 
+                    <Bar
+                      dataKey="planned"
+                      fill={theme.palette.grey[500]}
+                      name="Planned"
                     />
-                    <Bar 
-                      dataKey="tasksCompleted" 
-                      fill={theme.palette.primary.main} 
-                      name="Completed" 
+                    <Bar
+                      dataKey="tasksCompleted"
+                      fill={theme.palette.primary.main}
+                      name="Completed"
                     />
                   </BarChart>
                 </ResponsiveContainer>
@@ -593,18 +637,26 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
           <Card
             sx={{
               borderRadius: "16px",
-              backgroundColor: theme.palette.background.paper,
               boxShadow: theme.shadows[2],
             }}
+            className="dark:bg-gray-800 bg-transparent"
           >
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="text.primary"
+                mb={2}
+              >
                 Burndown Chart
               </Typography>
               <Box sx={{ height: 320 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={burndownData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke={chartGridColor}
+                    />
                     <XAxis dataKey="day" stroke={chartTextColor} />
                     <YAxis stroke={chartTextColor} />
                     <Tooltip content={<CustomTooltip />} />
@@ -617,12 +669,12 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                       name="Ideal"
                       strokeWidth={2}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="actual" 
-                      stroke={theme.palette.primary.main} 
-                      name="Actual" 
-                      strokeWidth={3} 
+                    <Line
+                      type="monotone"
+                      dataKey="actual"
+                      stroke={theme.palette.primary.main}
+                      name="Actual"
+                      strokeWidth={3}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -635,40 +687,58 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
         <Card
           sx={{
             borderRadius: "16px",
-            backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[2],
           }}
+          className="dark:bg-gray-800 bg-transparent"
         >
           <CardContent sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight="bold" color="text.primary" mb={3}>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              color="text.primary"
+              mb={3}
+            >
               Team Performance
             </Typography>
-            <Box sx={{ 
-              display: 'grid', 
-              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, 
-              gap: 3 
-            }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "repeat(2, 1fr)",
+                  lg: "repeat(4, 1fr)",
+                },
+                gap: 3,
+              }}
+            >
               {teamPerformance.map((member, index) => (
-                <Box key={index} sx={{ textAlign: 'center' }}>
+                <Box key={index} sx={{ textAlign: "center" }}>
                   <Avatar
                     src={projectData.teamMembers[index]?.avatar}
                     alt={member.name}
-                    sx={{ 
-                      width: 64, 
-                      height: 64, 
-                      mx: 'auto',
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      mx: "auto",
                       mb: 1.5,
-                      backgroundColor: theme.palette.grey[700]
+                      backgroundColor: theme.palette.grey[700],
                     }}
                   />
-                  <Typography variant="h6" fontWeight="bold" color="text.primary" mb={0.5}>
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    color="text.primary"
+                    mb={0.5}
+                  >
                     {member.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" mb={2}>
                     {projectData.teamMembers[index]?.role}
                   </Typography>
-                  <Box sx={{ display: 'grid', gap: 1 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Box sx={{ display: "grid", gap: 1 }}>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
                       <Typography variant="caption" color="text.disabled">
                         Completed
                       </Typography>
@@ -676,7 +746,9 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                         {member.completed}
                       </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
                       <Typography variant="caption" color="text.disabled">
                         In Progress
                       </Typography>
@@ -684,11 +756,17 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
                         {member.inProgress}
                       </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
                       <Typography variant="caption" color="text.disabled">
                         Efficiency
                       </Typography>
-                      <Typography variant="caption" fontWeight="medium" color="success.main">
+                      <Typography
+                        variant="caption"
+                        fontWeight="medium"
+                        color="success.main"
+                      >
                         {member.efficiency}%
                       </Typography>
                     </Box>
@@ -700,12 +778,12 @@ export default function ProjectStatistics({darkMode, toggleDarkMode}) {
         </Card>
       </Container>
     </Box>
-  )
+  );
 }
 
 // Helper function for alpha blending
 function alpha(color, opacity) {
-  const hex = color.replace('#', '');
+  const hex = color.replace("#", "");
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);

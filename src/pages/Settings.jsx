@@ -666,6 +666,7 @@ export default function UserSettings() {
                   be certain.
                 </Typography> */}
                 <Button
+                  fullWidth
                   variant="outlined"
                   color="error"
                   startIcon={<Delete />}

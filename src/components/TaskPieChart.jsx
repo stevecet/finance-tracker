@@ -78,11 +78,11 @@ export default function TaskPieChart({ data }) {
 
   return (
     <Card
-      className="shadow-lg"
+      className="shadow-lg dark:bg-gray-800 bg-transparent"
       sx={{
       }}
     >
-      <CardContent className="p-6 bg-white dark:bg-gray-900 dark:text-white rounded-xl">
+      <CardContent className="p-6 dark:text-white rounded-xl">
         <Typography
           variant="h6"
           className="font-bold text-gray-900 mb-4 text-center dark:text-gray-400"
